@@ -3,7 +3,11 @@
     "name": "Mabar Badminton Manager",
     "slug": "mabar-badminton-manager",
     "version": "1.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
@@ -12,7 +16,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -21,6 +27,9 @@
         "foregroundImage": "./src/assets/icon.png",
         "backgroundColor": "#22C55E"
       }
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

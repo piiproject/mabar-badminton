@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import AppButton from '../components/AppButton';
 import AppCard from '../components/AppCard';
 import ScreenHeader from '../components/ScreenHeader';
@@ -45,10 +45,16 @@ const ProfileScreen = ({ navigation }: any) => {
           </View>
         </AppCard>
 
-        <AppButton variant="danger" style={styles.logoutButton} onPress={() => {
-          logout();
-          navigation.navigate('Home');
-        }}>
+        <AppButton
+          variant="danger"
+          style={styles.logoutButton}
+          onPress={() => {
+            Alert.alert('Keluar dari akun?', 'Anda harus login kembali untuk mengakses fitur pribadi.', [
+              { text: 'Batal', style: 'cancel' },
+              { text: 'Logout', style: 'destructive', onPress: async () => { await logout(); navigation.navigate('Main'); } },
+            ]);
+          }}
+        >
           Logout
         </AppButton>
       </ScrollView>

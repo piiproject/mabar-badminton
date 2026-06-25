@@ -1,9 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
+
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SplashScreen from '../screens/SplashScreen';
@@ -21,9 +21,8 @@ const GuestTabs = () => (
     screenOptions={({ route }) => ({
       headerShown: false,
       tabBarIcon: ({ color, size }) => {
-        const icons: Record<string, string> = {
+        const icons: Record<string, React.ComponentProps<typeof MaterialCommunityIcons>['name']> = {
           Home: 'home-outline',
-          Search: 'magnify',
           Login: 'login',
         };
         return <MaterialCommunityIcons name={icons[route.name] ?? 'circle'} size={size} color={color} />;
@@ -33,7 +32,6 @@ const GuestTabs = () => (
     })}
   >
     <BottomTab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-    <BottomTab.Screen name="Search" component={SearchScreen} options={{ title: 'Cari Event' }} />
     <BottomTab.Screen name="Login" component={LoginScreen} options={{ title: 'Masuk' }} />
   </BottomTab.Navigator>
 );
@@ -43,7 +41,7 @@ const AuthTabs = () => (
     screenOptions={({ route }) => ({
       headerShown: false,
       tabBarIcon: ({ color, size }) => {
-        const icons: Record<string, string> = {
+        const icons: Record<string, React.ComponentProps<typeof MaterialCommunityIcons>['name']> = {
           Home: 'home-outline',
           MyEvents: 'calendar-check',
           Create: 'plus-box',

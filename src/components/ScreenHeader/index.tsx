@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 
 type ScreenHeaderProps = {
@@ -8,7 +8,7 @@ type ScreenHeaderProps = {
   subtitle?: string;
   showBack?: boolean;
   onBack?: () => void;
-  actionIcon?: string;
+  actionIcon?: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
   onAction?: () => void;
 };
 

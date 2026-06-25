@@ -31,6 +31,12 @@ const EventDetailScreen = ({ navigation, route }: any) => {
       setShowAuthPrompt(true);
       return;
     }
+    // ensure profile completeness
+    if (!user.fullName || !user.phone) {
+      // redirect to profile to complete data
+      navigation.navigate('Profile');
+      return;
+    }
     navigation.navigate('Main', { screen: 'MyEvents' });
   };
 
@@ -61,7 +67,7 @@ const EventDetailScreen = ({ navigation, route }: any) => {
         onDismiss={() => setShowAuthPrompt(false)}
         onLogin={() => {
           setShowAuthPrompt(false);
-          navigation.navigate('Login');
+          navigation.navigate('Main', { screen: 'Login' });
         }}
         onRegister={() => {
           setShowAuthPrompt(false);

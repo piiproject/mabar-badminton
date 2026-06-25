@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-nati
 import { Menu, TextInput } from 'react-native-paper';
 import AppButton from '../components/AppButton';
 import AppCard from '../components/AppCard';
-import ScreenHeader from '../components/ScreenHeader';
 import { globalStyles, useAppTheme } from '../theme/baseStyles';
 
 const cities = [
@@ -91,11 +90,20 @@ const HomeScreen = ({ navigation }: any) => {
 
   return (
     <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
-      <ScreenHeader title="Mabar Badminton Manager" subtitle="Temukan dan kelola event badminton di seluruh Indonesia" />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
+        <View style={styles.headerRow}>
+          <View style={[styles.logoCircle, { backgroundColor: paperTheme.colors.primary }]}> 
+            <Text style={[styles.logoText, { color: paperTheme.colors.onPrimary }]}>MB</Text>
+          </View>
+          <View style={styles.headerTextGroup}>
+            <Text style={[styles.appTitle, { color: paperTheme.colors.onSurface }]}>Mabar Badminton</Text>
+            <Text style={[styles.appSubtitle, { color: paperTheme.colors.onSurfaceVariant }]}>Temukan event badminton di seluruh Indonesia</Text>
+          </View>
+        </View>
+
         <TextInput
           mode="outlined"
-          placeholder="Cari nama event atau penyelenggara"
+          placeholder="Cari event badminton"
           value={searchTerm}
           onChangeText={setSearchTerm}
           style={styles.searchInput}
@@ -159,6 +167,35 @@ const HomeScreen = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  logoCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: '800',
+  },
+  headerTextGroup: {
+    flex: 1,
+  },
+  appTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    marginBottom: 4,
+  },
+  appSubtitle: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
   searchInput: {
     marginBottom: 16,
     borderRadius: 16,
