@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import ScreenLayout from '../components/ScreenLayout';
 import { useAppTheme } from '../theme/baseStyles';
 
 const SplashScreen = ({ navigation }: any) => {
@@ -14,13 +15,13 @@ const SplashScreen = ({ navigation }: any) => {
   }, [navigation]);
 
   return (
-    <View style={[styles.container, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout scroll={false} style={styles.container}>
       <View style={[styles.card, { backgroundColor: paperTheme.colors.surface }]}> 
         <Text style={[styles.logo, { color: paperTheme.colors.primary }]}>MB</Text>
         <Text style={[styles.title, { color: paperTheme.colors.onSurface }]}>Mabar Badminton Manager</Text>
         <Text style={[styles.subtitle, { color: paperTheme.colors.onSurfaceVariant }]}>Temukan dan Kelola Mabar Badminton di Seluruh Indonesia</Text>
       </View>
-    </View>
+    </ScreenLayout>
   );
 };
 

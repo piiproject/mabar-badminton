@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Menu, TextInput } from 'react-native-paper';
 import AppButton from '../components/AppButton';
 import AppCard from '../components/AppCard';
+import ScreenLayout from '../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../theme/baseStyles';
 
 const cities = [
@@ -89,9 +90,8 @@ const HomeScreen = ({ navigation }: any) => {
   );
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
-      <ScrollView contentContainerStyle={globalStyles.screenContent}>
-        <View style={styles.headerRow}>
+    <ScreenLayout>
+      <View style={styles.headerRow}>
           <View style={[styles.logoCircle, { backgroundColor: paperTheme.colors.primary }]}> 
             <Text style={[styles.logoText, { color: paperTheme.colors.onPrimary }]}>MB</Text>
           </View>
@@ -161,8 +161,7 @@ const HomeScreen = ({ navigation }: any) => {
             <AppButton variant="secondary" style={styles.detailButton} onPress={() => navigation.navigate('EventDetail', { event: item })}>Lihat Detail</AppButton>
           </AppCard>
         ))}
-      </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

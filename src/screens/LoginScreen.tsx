@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
 import ScreenHeader from '../components/ScreenHeader';
+import ScreenLayout from '../components/ScreenLayout';
 import { useAppTheme } from '../theme/baseStyles';
 import { useAppStore } from '../store/useAppStore';
 
 const LoginScreen = ({ navigation }: any) => {
-  const { paperTheme } = useAppTheme();
+  const { paperTheme, t } = useAppTheme();
   const { login } = useAppStore();
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
@@ -28,19 +29,19 @@ const LoginScreen = ({ navigation }: any) => {
   const validate = () => {
     // identifier: email or whatsapp
     if (!identifier) {
-      setIdError('Email atau Nomor WhatsApp wajib diisi.');
+      setIdError(t.validation.requiredEmail);
     } else if (identifier.includes('@')) {
       const re = /\S+@\S+\.\S+/;
-      if (!re.test(identifier)) setIdError('Masukkan alamat email yang valid.');
+      if (!re.test(identifier)) setIdError(t.validation.invalidEmail);
       else setIdError(null);
     } else {
       const digits = identifier.replace(/[^0-9]/g, '');
-      if (!/^[0-9]+$/.test(digits) || digits.length < 10 || digits.length > 15) setIdError('Nomor WhatsApp tidak valid.');
+      if (!/^[0-9]+$/.test(digits) || digits.length < 10 || digits.length > 15) setIdError(t.validation.invalidPhone);
       else setIdError(null);
     }
 
-    if (!password) setPassError('Password wajib diisi.');
-    else if (password.length < 6) setPassError('Password minimal 6 karakter.');
+    if (!password) setPassError(t.validation.requiredPassword);
+    else if (password.length < 6) setPassError(t.validation.minPassword);
     else setPassError(null);
   };
 
@@ -51,27 +52,32 @@ const LoginScreen = ({ navigation }: any) => {
   }, [identifier, password, idError, passError]);
 
   return (
-    <View style={[{ flex: 1, backgroundColor: paperTheme.colors.background }]}> 
-      <ScreenHeader title="Masuk" subtitle="Gunakan email atau WhatsApp untuk melanjutkan" showBack onBack={() => navigation.goBack()} />
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={[styles.description, { color: paperTheme.colors.onSurfaceVariant }]}>Masuk untuk bergabung dengan event, membuat event, dan mengelola aktivitas Mabar.</Text>
-        <AppInput label="Email / WhatsApp" value={identifier} onChangeText={setIdentifier} style={styles.input} autoCapitalize="none" />
-        {idError ? <Text style={[styles.errorText]}>{idError}</Text> : null}
-        <AppInput label="Password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
-        {passError ? <Text style={[styles.errorText]}>{passError}</Text> : null}
-        <TouchableOpacity onPress={() => {}}>
-          <Text style={[styles.link, { color: paperTheme.colors.primary }]}>Lupa Password?</Text>
+    <ScreenLayout contentContainerStyle={styles.content}>
+      <ScreenHeader
+        title={t.login.title}
+        subtitle={t.login.subtitle}
+        showBack
+        actionIcon="cog"
+        onAction={() => navigation.navigate('LanguageSettings')}
+        onBack={() => navigation.goBack()}
+      />
+      <Text style={[styles.description, { color: paperTheme.colors.onSurfaceVariant }]}>{t.login.description}</Text>
+      <AppInput label={t.login.emailWhatsApp} value={identifier} onChangeText={setIdentifier} style={styles.input} autoCapitalize="none" />
+      {idError ? <Text style={[styles.errorText]}>{idError}</Text> : null}
+      <AppInput label={t.login.password} value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
+      {passError ? <Text style={[styles.errorText]}>{passError}</Text> : null}
+      <TouchableOpacity onPress={() => {}}>
+        <Text style={[styles.link, { color: paperTheme.colors.primary }]}>{t.login.forgotPassword}</Text>
+      </TouchableOpacity>
+      <AppButton style={styles.button} onPress={handleLogin} disabled={!isValid || loading} loading={loading}>{t.login.loginButton}</AppButton>
+      <AppButton variant="secondary" style={styles.button} onPress={() => navigation.navigate('Register')} disabled={loading}>{t.login.registerButton}</AppButton>
+      <View style={styles.footerText}>
+        <Text style={[styles.text, { color: paperTheme.colors.onSurfaceVariant }]}>{t.login.registerQuestion} </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={[styles.link, { color: paperTheme.colors.primary }]}>{t.login.registerLink}</Text>
         </TouchableOpacity>
-        <AppButton style={styles.button} onPress={handleLogin} disabled={!isValid || loading} loading={loading}>Masuk</AppButton>
-        <AppButton variant="secondary" style={styles.button} onPress={() => navigation.navigate('Register')} disabled={loading}>Daftar Akun Baru</AppButton>
-        <View style={styles.footerText}> 
-          <Text style={[styles.text, { color: paperTheme.colors.onSurfaceVariant }]}>Sudah punya akun? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={[styles.link, { color: paperTheme.colors.primary }]}>Masuk</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScreenLayout>
   );
 };
 

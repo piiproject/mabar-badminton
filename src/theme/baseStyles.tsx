@@ -2,6 +2,7 @@ import React, { createContext, useContext, useMemo, useState } from 'react';
 import { Appearance } from 'react-native';
 import { MD3DarkTheme, MD3LightTheme } from 'react-native-paper';
 import { color, radius, shadow } from './themeConstants';
+import { translations, Language } from './translations';
 
 export { color, typography, spacing, radius, shadow } from './themeConstants';
 
@@ -50,6 +51,9 @@ type ThemeContextValue = {
   setMode: (value: ThemeMode) => void;
   paperTheme: typeof lightTheme;
   isDark: boolean;
+  language: Language;
+  setLanguage: (value: Language) => void;
+  t: typeof translations['id'];
 };
 
 const ThemeContext = createContext<ThemeContextValue>({
@@ -57,16 +61,21 @@ const ThemeContext = createContext<ThemeContextValue>({
   setMode: () => null,
   paperTheme: lightTheme,
   isDark: false,
+  language: 'id',
+  setLanguage: () => null,
+  t: translations.id,
 });
 
 export const ThemeProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [mode, setMode] = useState<ThemeMode>('system');
+  const [language, setLanguage] = useState<Language>('id');
   const colorScheme = Appearance.getColorScheme();
   const isDark = mode === 'system' ? colorScheme === 'dark' : mode === 'dark';
   const paperTheme = useMemo(() => (isDark ? darkTheme : lightTheme), [isDark]);
+  const t = useMemo(() => translations[language], [language]);
 
   return (
-    <ThemeContext.Provider value={{ mode, setMode, paperTheme, isDark }}>
+    <ThemeContext.Provider value={{ mode, setMode, paperTheme, isDark, language, setLanguage, t }}>
       {children}
     </ThemeContext.Provider>
   );

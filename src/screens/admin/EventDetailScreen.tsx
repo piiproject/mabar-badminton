@@ -4,6 +4,7 @@ import AppButton from '../../components/AppButton';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
 import AuthPromptModal from '../../components/AuthPromptModal';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 import { useAppStore } from '../../store/useAppStore';
 
@@ -41,7 +42,7 @@ const EventDetailScreen = ({ navigation, route }: any) => {
   };
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Detail Event" showBack onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
         <AppCard style={styles.bannerCard}>
@@ -74,7 +75,7 @@ const EventDetailScreen = ({ navigation, route }: any) => {
           navigation.navigate('Register');
         }}
       />
-    </View>
+    </ScreenLayout>
   );
 };
 

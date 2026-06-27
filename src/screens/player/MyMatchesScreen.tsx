@@ -1,9 +1,10 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import AppButton from '../../components/AppButton';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
 import StatusBadge from '../../components/StatusBadge';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const matches = [
@@ -15,7 +16,7 @@ const MyMatchesScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Jadwal Saya" />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
         {matches.map((item) => (
@@ -28,7 +29,7 @@ const MyMatchesScreen = ({ navigation }: any) => {
         ))}
         <AppButton onPress={() => navigation.navigate('Queue')} style={styles.button}>Kembali</AppButton>
       </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

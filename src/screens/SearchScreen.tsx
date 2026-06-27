@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Menu, TextInput } from 'react-native-paper';
 import AppButton from '../components/AppButton';
 import AppCard from '../components/AppCard';
 import ScreenHeader from '../components/ScreenHeader';
-import { globalStyles, useAppTheme } from '../theme/baseStyles';
+import ScreenLayout from '../components/ScreenLayout';
+import { useAppTheme } from '../theme/baseStyles';
 
 const cities = [
   'Semua Kota',
@@ -74,20 +75,19 @@ const SearchScreen = ({ navigation }: any) => {
   );
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout contentContainerStyle={styles.content}>
       <ScreenHeader title="Cari Event" subtitle="Temukan event berdasarkan nama atau penyelenggara" />
-      <ScrollView contentContainerStyle={globalStyles.screenContent}>
-        <TextInput
-          mode="outlined"
-          placeholder="Cari nama event atau penyelenggara"
-          value={query}
-          onChangeText={setQuery}
-          style={styles.searchInput}
-          outlineColor={paperTheme.colors.outline}
-          activeOutlineColor={paperTheme.colors.primary}
-        />
+      <TextInput
+        mode="outlined"
+        placeholder="Cari nama event atau penyelenggara"
+        value={query}
+        onChangeText={setQuery}
+        style={styles.searchInput}
+        outlineColor={paperTheme.colors.outline}
+        activeOutlineColor={paperTheme.colors.primary}
+      />
 
-        <View style={styles.filterRow}>
+      <View style={styles.filterRow}>
           <Menu
             visible={cityMenuVisible}
             onDismiss={() => setCityMenuVisible(false)}
@@ -126,12 +126,14 @@ const SearchScreen = ({ navigation }: any) => {
             </AppCard>
           ))
         )}
-      </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
+  content: {
+    paddingBottom: 24,
+  },
   searchInput: {
     marginBottom: 16,
     borderRadius: 16,

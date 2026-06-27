@@ -1,13 +1,14 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import AppButton from '../components/AppButton';
-import { globalStyles, useAppTheme } from '../theme/baseStyles';
+import ScreenLayout from '../components/ScreenLayout';
+import { useAppTheme } from '../theme/baseStyles';
 
 const LandingScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <ScrollView style={[globalStyles.container, { backgroundColor: paperTheme.colors.background }]} contentContainerStyle={[globalStyles.content, styles.content]}>
+    <ScreenLayout contentContainerStyle={styles.content}>
       <View style={styles.hero}>  
         <View style={[styles.logo, { backgroundColor: paperTheme.colors.surface }]}>
           <Text style={[styles.logoText, { color: paperTheme.colors.primary }]}>MB</Text>
@@ -24,7 +25,7 @@ const LandingScreen = ({ navigation }: any) => {
           Join Mabar
         </AppButton>
       </View>
-    </ScrollView>
+    </ScreenLayout>
   );
 };
 

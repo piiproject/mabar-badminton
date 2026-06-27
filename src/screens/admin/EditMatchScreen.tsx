@@ -4,13 +4,14 @@ import AppButton from '../../components/AppButton';
 import AppInput from '../../components/AppInput';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const EditMatchScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Edit Match" showBack onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
         <AppCard>
@@ -21,7 +22,7 @@ const EditMatchScreen = ({ navigation }: any) => {
         </AppCard>
         <AppButton onPress={() => navigation.goBack()}>Simpan Perubahan</AppButton>
       </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

@@ -4,13 +4,14 @@ import AppButton from '../../components/AppButton';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
 import StatusBadge from '../../components/StatusBadge';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const QueueStatusScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Status Antrean" />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
         <AppCard style={styles.card}>
@@ -32,7 +33,7 @@ const QueueStatusScreen = ({ navigation }: any) => {
           <AppButton style={styles.button} onPress={() => navigation.navigate('Matches')}>Lihat Jadwal Saya</AppButton>
         </View>
       </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

@@ -1,8 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import AppButton from '../components/AppButton';
 import AppCard from '../components/AppCard';
 import ScreenHeader from '../components/ScreenHeader';
+import ScreenLayout from '../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../theme/baseStyles';
 import { useAppStore } from '../store/useAppStore';
 
@@ -11,17 +12,16 @@ const ProfileScreen = ({ navigation }: any) => {
   const { user, logout } = useAppStore();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Profil" />
-      <ScrollView contentContainerStyle={globalStyles.screenContent}>
-        <AppCard>
-          <Text style={[styles.name, { color: paperTheme.colors.onSurface }]}>{user?.fullName ?? 'Pengguna Mabar'}</Text>
-          <Text style={[styles.meta, { color: paperTheme.colors.onSurfaceVariant }]}>{user?.email ?? 'belum.login@example.com'}</Text>
-          <Text style={[styles.detail, { color: paperTheme.colors.onSurfaceVariant }]}>{user?.phone ?? 'Belum terdaftar'}</Text>
-          <Text style={[styles.detail, { color: paperTheme.colors.onSurfaceVariant }]}>{user?.city ? `Domisili ${user.city}` : 'Domisili belum diatur'}</Text>
-        </AppCard>
+      <AppCard>
+        <Text style={[styles.name, { color: paperTheme.colors.onSurface }]}>{user?.fullName ?? 'Pengguna Mabar'}</Text>
+        <Text style={[styles.meta, { color: paperTheme.colors.onSurfaceVariant }]}>{user?.email ?? 'belum.login@example.com'}</Text>
+        <Text style={[styles.detail, { color: paperTheme.colors.onSurfaceVariant }]}>{user?.phone ?? 'Belum terdaftar'}</Text>
+        <Text style={[styles.detail, { color: paperTheme.colors.onSurfaceVariant }]}>{user?.city ? `Domisili ${user.city}` : 'Domisili belum diatur'}</Text>
+      </AppCard>
 
-        <AppCard style={styles.sectionCard}>
+      <AppCard style={styles.sectionCard}>
           <MenuItem label="Edit Profil" onPress={() => {}} />
           <MenuItem label="Event Saya" onPress={() => navigation.navigate('MyEvents')} />
           <MenuItem label="Riwayat Mabar" onPress={() => navigation.navigate('MyEvents')} />
@@ -57,8 +57,7 @@ const ProfileScreen = ({ navigation }: any) => {
         >
           Logout
         </AppButton>
-      </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

@@ -3,7 +3,8 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import AppButton from '../../components/AppButton';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
-import { globalStyles, useAppTheme } from '../../theme/baseStyles';
+import ScreenLayout from '../../components/ScreenLayout';
+import { useAppTheme } from '../../theme/baseStyles';
 
 const players = [
   { name: 'Andi Wijaya', plays: 3, total: 'Rp120.000' },
@@ -15,7 +16,7 @@ const EventSummaryScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Rekap Event" showBack onBack={() => navigation.goBack()} />
       <View style={styles.statsRow}>
         <AppCard style={styles.statCard}>
@@ -52,7 +53,7 @@ const EventSummaryScreen = ({ navigation }: any) => {
         <AppButton variant="secondary" style={styles.actionButton}>Bagikan Rekap</AppButton>
         <AppButton variant="danger" style={styles.actionButton}>Tutup Event</AppButton>
       </View>
-    </View>
+    </ScreenLayout>
   );
 };
 

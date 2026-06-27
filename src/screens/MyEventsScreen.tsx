@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import AppButton from '../components/AppButton';
 import AppCard from '../components/AppCard';
 import ScreenHeader from '../components/ScreenHeader';
+import ScreenLayout from '../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../theme/baseStyles';
 
 const followedEvents = [
@@ -42,7 +43,7 @@ const MyEventsScreen = ({ navigation }: any) => {
   const items = activeTab === 'followed' ? followedEvents : createdEvents;
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Event Saya" subtitle="Event yang diikuti dan dibuat" />
       <View style={styles.tabRow}>
         <AppButton
@@ -71,7 +72,7 @@ const MyEventsScreen = ({ navigation }: any) => {
           </AppCard>
         ))}
       </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

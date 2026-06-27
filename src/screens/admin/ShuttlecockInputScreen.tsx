@@ -4,13 +4,14 @@ import AppButton from '../../components/AppButton';
 import AppInput from '../../components/AppInput';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const ShuttlecockInputScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Input Shuttlecock" showBack onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
         <AppCard>
@@ -22,7 +23,7 @@ const ShuttlecockInputScreen = ({ navigation }: any) => {
           <AppButton style={styles.button}>Generate Match Berikutnya</AppButton>
         </View>
       </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

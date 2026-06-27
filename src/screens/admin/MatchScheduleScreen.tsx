@@ -5,6 +5,7 @@ import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
 import StatusBadge from '../../components/StatusBadge';
 import CountdownTimer from '../../components/CountdownTimer';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const matches = [
@@ -16,7 +17,7 @@ const MatchScheduleScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Jadwal Pertandingan" showBack onBack={() => navigation.goBack()} />
       <ScrollView contentContainerStyle={globalStyles.screenContent}>
         {matches.map((item) => (
@@ -37,7 +38,7 @@ const MatchScheduleScreen = ({ navigation }: any) => {
           </AppCard>
         ))}
       </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 

@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import AppButton from '../../components/AppButton';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const attendees = [
@@ -15,7 +16,7 @@ const AttendanceScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Daftar Hadir" showBack onBack={() => navigation.goBack()} />
       <View style={globalStyles.actionsRow}>
         <AppButton variant="outline" style={styles.actionButton}>Refresh</AppButton>
@@ -37,7 +38,7 @@ const AttendanceScreen = ({ navigation }: any) => {
           </AppCard>
         )}
       />
-    </View>
+    </ScreenLayout>
   );
 };
 

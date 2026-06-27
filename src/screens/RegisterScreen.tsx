@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
 import ScreenHeader from '../components/ScreenHeader';
+import ScreenLayout from '../components/ScreenLayout';
 import { useAppTheme } from '../theme/baseStyles';
 import { useAppStore } from '../store/useAppStore';
 
 const RegisterScreen = ({ navigation }: any) => {
-  const { paperTheme } = useAppTheme();
+  const { paperTheme, t } = useAppTheme();
   const { login } = useAppStore();
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
@@ -32,20 +33,20 @@ const RegisterScreen = ({ navigation }: any) => {
 
   const validate = () => {
     const e: { [key: string]: string | null } = {};
-    if (!fullName || fullName.trim().length < 3) e.fullName = 'Nama lengkap wajib diisi.';
-    if (!phone) e.phone = 'Nomor WhatsApp tidak valid.';
+    if (!fullName || fullName.trim().length < 3) e.fullName = t.validation.requiredFullName;
+    if (!phone) e.phone = t.validation.invalidPhone;
     else {
       const digits = phone.replace(/[^0-9]/g, '');
-      if (!/^[0-9]+$/.test(digits) || digits.length < 10 || digits.length > 15) e.phone = 'Nomor WhatsApp tidak valid.';
+      if (!/^[0-9]+$/.test(digits) || digits.length < 10 || digits.length > 15) e.phone = t.validation.invalidPhone;
     }
-    if (!email) e.email = 'Masukkan email yang valid.';
+    if (!email) e.email = t.validation.invalidEmail;
     else {
       const re = /\S+@\S+\.\S+/;
-      if (!re.test(email)) e.email = 'Masukkan email yang valid.';
+      if (!re.test(email)) e.email = t.validation.invalidEmail;
     }
-    if (!password || password.length < 6) e.password = 'Password minimal 6 karakter.';
-    if (confirmPassword !== password) e.confirmPassword = 'Konfirmasi password tidak sesuai.';
-    if (!acceptedTerms) e.terms = 'Anda harus menyetujui syarat.';
+    if (!password || password.length < 6) e.password = t.validation.minPassword;
+    if (confirmPassword !== password) e.confirmPassword = t.validation.passwordMismatch;
+    if (!acceptedTerms) e.terms = t.validation.requiredTerms;
     setErrors(e);
     setIsValid(Object.keys(e).length === 0);
   };
@@ -56,34 +57,39 @@ const RegisterScreen = ({ navigation }: any) => {
   }, [fullName, phone, email, password, confirmPassword, acceptedTerms]);
 
   return (
-    <View style={[{ flex: 1, backgroundColor: paperTheme.colors.background }]}> 
-      <ScreenHeader title="Daftar Akun" subtitle="Buat akun untuk mulai join dan membuat event" showBack onBack={() => navigation.goBack()} />
-      <ScrollView contentContainerStyle={styles.content}>
-        <AppInput label="Nama Lengkap" value={fullName} onChangeText={setFullName} style={styles.input} />
-        {errors.fullName ? <Text style={styles.errorText}>{errors.fullName}</Text> : null}
-        <AppInput label="Nomor WhatsApp" value={phone} onChangeText={setPhone} keyboardType="phone-pad" style={styles.input} />
-        {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
-        <AppInput label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" style={styles.input} />
-        {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-        <AppInput label="Password" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
-        {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
-        <AppInput label="Konfirmasi Password" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry style={styles.input} />
-        {errors.confirmPassword ? <Text style={styles.errorText}>{errors.confirmPassword}</Text> : null}
+    <ScreenLayout contentContainerStyle={styles.content}>
+      <ScreenHeader
+        title={t.register.title}
+        subtitle={t.register.subtitle}
+        showBack
+        actionIcon="cog"
+        onAction={() => navigation.navigate('LanguageSettings')}
+        onBack={() => navigation.goBack()}
+      />
+      <AppInput label={t.register.fullName} value={fullName} onChangeText={setFullName} style={styles.input} />
+      {errors.fullName ? <Text style={styles.errorText}>{errors.fullName}</Text> : null}
+      <AppInput label={t.register.phone} value={phone} onChangeText={setPhone} keyboardType="phone-pad" style={styles.input} />
+      {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
+      <AppInput label={t.register.email} value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" style={styles.input} />
+      {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+      <AppInput label={t.register.password} value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
+      {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
+      <AppInput label={t.register.confirmPassword} value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry style={styles.input} />
+      {errors.confirmPassword ? <Text style={styles.errorText}>{errors.confirmPassword}</Text> : null}
 
-        <View style={styles.termsRow}>
-          <Checkbox status={acceptedTerms ? 'checked' : 'unchecked'} onPress={() => setAcceptedTerms(!acceptedTerms)} />
-          <Text style={[styles.termsText, { color: paperTheme.colors.onSurfaceVariant }]}>Saya menyetujui syarat dan ketentuan.</Text>
-        </View>
+      <View style={styles.termsRow}>
+        <Checkbox status={acceptedTerms ? 'checked' : 'unchecked'} onPress={() => setAcceptedTerms(!acceptedTerms)} />
+        <Text style={[styles.termsText, { color: paperTheme.colors.onSurfaceVariant }]}>{t.register.terms}</Text>
+      </View>
 
-        <AppButton style={styles.button} onPress={handleRegister} disabled={!isValid || loading} loading={loading}>Daftar</AppButton>
-        <View style={styles.footerText}>
-          <Text style={[styles.text, { color: paperTheme.colors.onSurfaceVariant }]}>Sudah punya akun? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={[styles.link, { color: paperTheme.colors.primary }]}>Masuk</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </View>
+      <AppButton style={styles.button} onPress={handleRegister} disabled={!isValid || loading} loading={loading}>{t.register.button}</AppButton>
+      <View style={styles.footerText}>
+        <Text style={[styles.text, { color: paperTheme.colors.onSurfaceVariant }]}>{t.register.accountQuestion} </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={[styles.link, { color: paperTheme.colors.primary }]}>{t.register.loginLink}</Text>
+        </TouchableOpacity>
+      </View>
+    </ScreenLayout>
   );
 };
 

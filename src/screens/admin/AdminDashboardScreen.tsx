@@ -1,8 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import AppButton from '../../components/AppButton';
 import AppCard from '../../components/AppCard';
 import ScreenHeader from '../../components/ScreenHeader';
+import ScreenLayout from '../../components/ScreenLayout';
 import { globalStyles, useAppTheme } from '../../theme/baseStyles';
 
 const summaryCards = [
@@ -16,10 +17,9 @@ const AdminDashboardScreen = ({ navigation }: any) => {
   const { paperTheme } = useAppTheme();
 
   return (
-    <View style={[globalStyles.page, { backgroundColor: paperTheme.colors.background }]}> 
+    <ScreenLayout>
       <ScreenHeader title="Dashboard" subtitle="Ringkasan event dan aksi cepat" />
-      <ScrollView contentContainerStyle={globalStyles.screenContent}>
-        <View style={styles.summaryGrid}>
+      <View style={styles.summaryGrid}>
           {summaryCards.map((item) => (
             <AppCard key={item.label} style={styles.summaryCard}>
               <Text style={[styles.cardValue, { color: paperTheme.colors.onSurface }]}>{item.value}</Text>
@@ -35,8 +35,7 @@ const AdminDashboardScreen = ({ navigation }: any) => {
           <AppButton variant="outline" style={styles.actionButton} onPress={() => navigation.navigate('MatchSchedule')}>Jadwal Pertandingan</AppButton>
           <AppButton variant="danger" style={styles.actionButton} onPress={() => navigation.navigate('EventSummary')}>Rekap Event</AppButton>
         </View>
-      </ScrollView>
-    </View>
+    </ScreenLayout>
   );
 };
 
